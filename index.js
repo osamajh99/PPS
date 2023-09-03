@@ -5,7 +5,8 @@ const app = express()
 const apiPort = 3000
 
 const db = require('./Model/db')
-const productsRouter = require('./routes/products-router')
+const productsRouter = require('./Routes/products-router')
+const StockRouter = require('./Routes/Stock-router')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
@@ -17,4 +18,5 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 app.use('/api', productsRouter)
+app.use('/api', StockRouter)
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
