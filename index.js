@@ -7,6 +7,8 @@ const apiPort = 3000
 const db = require('./Model/db')
 const productsRouter = require('./Routes/products-router')
 const StockRouter = require('./Routes/Stock-router')
+const UserRouter = require('./Routes/User-router')
+
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
@@ -17,6 +19,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
+
 app.use('/api', productsRouter)
 app.use('/api', StockRouter)
+app.use('/api',UserRouter)
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
