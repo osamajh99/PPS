@@ -1,5 +1,5 @@
 const express = require('express')
-const { checkAuthUser } = require("../middlewares/checkAuthUser");
+const { checkAuthUser } = require("../Middlewares/checkAuthUser");
 
 const ProductsCtrl = require('../Controller/products-ctrl')
 
