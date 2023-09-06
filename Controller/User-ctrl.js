@@ -4,8 +4,7 @@ const jwt = require('jsonwebtoken')
 
 const { SignUpValidation } = require('../utils/validator')
 const saltRounds = 10;
-const JWT_SECRET =
-  "scriptteam-secret-key";
+const JWT_SECRET = "scriptteam-secret-key";
 const SignUP = async (req, res) => {
      // Check if the req.body valid or not
      const { Email, Password, UserName, PhoneNumber, Adsress, IsAdmin } = req.body
