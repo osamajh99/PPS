@@ -1,14 +1,12 @@
 const Products = require('../Model/products-model')
 addProducts = (req, res) => {
      const body = req.body
-
      if (!body) {
           return res.status(400).json({
                success: false,
                error: 'You must provide a products',
           })
      }
-
      const products = new Products(body)
 
      if (!products) {
