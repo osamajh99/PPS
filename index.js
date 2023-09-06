@@ -8,6 +8,7 @@ const db = require('./Model/db')
 const productsRouter = require('./Routes/products-router')
 const StockRouter = require('./Routes/Stock-router')
 const UserRouter = require('./Routes/User-router')
+const orderRouter=require('./Routes/Orders-router')
 
 
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -23,4 +24,5 @@ app.get('/', (req, res) => {
 app.use('/api', productsRouter)
 app.use('/api', StockRouter)
 app.use('/api',UserRouter)
+app.use('/api', orderRouter)
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
