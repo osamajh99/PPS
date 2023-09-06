@@ -4,7 +4,7 @@ const UserCtrl = require('../Controller/User-ctrl')
 
  const router = express.Router()
 
- router.post('/AddUser', UserCtrl.addUser)
+ router.post('/signup',UserCtrl.SignUP)
 
  module.exports = router
 
