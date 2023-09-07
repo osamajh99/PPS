@@ -5,7 +5,6 @@ const OrderCtrl = require('../Controller/Orders-ctrl')
 
  const router = express.Router()
 
- router.post('/orders', OrderCtrl.CreateOrder)
- router.post('/products',[checkAuthUser], OrderCtrl.CreateOrder)
+ router.post('/addorders',[checkAuthUser], OrderCtrl.CreateOrder)
 
  module.exports = router

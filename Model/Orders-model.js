@@ -5,8 +5,8 @@ const Orders=new Schema({
 
     UserId:{type:mongoose.Schema.Types.ObjectId, ref:'User'},
     OrderDate:{type:Date,required: true },
-    products:[{ type: mongoose.Schema.Types.ObjectId, ref:'Products'}],
-    quantity:{type:Number,required: true},
+    ProductId:{ type: mongoose.Schema.Types.ObjectId, ref:'Products'},
+    Quantity:{type:Number,required: true},
     Price:{type:Number,required: true}
 },
 
