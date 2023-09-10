@@ -5,7 +5,7 @@ const { checkAuthUser } = require("../Middlewares/checkAuthUser");
 
  const router = express.Router()
 
- router.post('/signup',UserCtrl.SignUP)
+ router.post('/signup',UserCtrl.SignUp)
  router.post('/updateuserinfo/:id',[checkAuthUser],UserCtrl.UpdateUserInfo)
 
  module.exports = router

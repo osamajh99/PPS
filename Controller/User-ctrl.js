@@ -6,7 +6,7 @@ const { SignUpValidation } = require('../utils/validator')
 const saltRounds = 10;
 const JWT_SECRET = "scriptteam-secret-key";
 
-const SignUP = async (req, res) => {
+const SignUp = async (req, res) => {
      // Check if the req.body valid or not
      const { Email, Password, UserName, PhoneNumber, Address, IsAdmin } = req.body
      const errors = SignUpValidation({ Email, Password })
@@ -54,6 +54,6 @@ const UpdateUserInfo = async (req, res) => {
      }
 }
 module.exports = {
-     SignUP,
+     SignUp,
      UpdateUserInfo
 }
