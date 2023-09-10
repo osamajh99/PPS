@@ -31,7 +31,7 @@ CreateOrder = async (req, res) => {
           return res.status(400).json({ success: false, error: err })
      }
 
-     if (existProductInStock.Quantity > req.body.Quantity || existProductInStock.Quantity <= 0) {
+     if (existProductInStock.Quantity < req.body.Quantity || existProductInStock.Quantity <= 0) {
           return res.status(400).json({
                success: false,
                error: 'the Quantity is more than in Stock or 0 ',

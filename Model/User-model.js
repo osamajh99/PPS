@@ -6,7 +6,7 @@ const User=new Schema(
         Password:{type:String,required:true},
         Email:{type:String,required:true},
         PhoneNumber:{type:String,required:true},
-        Adsress:{type:String,required:true},
+        Adress:{type:String,required:true},
         IsAdmin:{type:Boolean,required:true},
     },
     {timestamps:true},

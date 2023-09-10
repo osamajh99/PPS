@@ -8,7 +8,7 @@ const JWT_SECRET = "scriptteam-secret-key";
 
 const SignUP = async (req, res) => {
      // Check if the req.body valid or not
-     const { Email, Password, UserName, PhoneNumber, Adsress, IsAdmin } = req.body
+     const { Email, Password, UserName, PhoneNumber, Adress, IsAdmin } = req.body
      const errors = SignUpValidation({ Email, Password })
 
      if(errors) {
@@ -26,7 +26,7 @@ const SignUP = async (req, res) => {
          if(err) {
              return res.status(403).json({ error: 'please try another passowrd'})
          }
-         const newUSer = { Email , UserName, PhoneNumber, Adsress, IsAdmin,  Password:  hash }
+         const newUSer = { Email , UserName, PhoneNumber, Adress, IsAdmin,  Password:  hash }
          const dbUser = await User.create(newUSer)
          const token = jwt.sign({
           expiresIn: '1d',
@@ -37,4 +37,6 @@ const SignUP = async (req, res) => {
 
  }
  
- module.exports = {SignUP: SignUP}
+ module.exports = {
+    SignUP 
+}
