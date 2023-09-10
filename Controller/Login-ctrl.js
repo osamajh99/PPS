@@ -1,18 +1,17 @@
 const bcrypt = require('bcrypt');
 const User = require('../Model/User-model');
 
-
-//const {login } = require('../utils/login');
-
-exports.loginvalidator = (req, res) => {
+ const {loginValidation } = require('../utils/login');
+exports.loginvalidator = async (req, res) => {
   const { Email, Password } = req.body;
+  const errors = loginValidation({ Email, Password })
 
-  if (!Email(Email)) {
-    return res.status(400).json({ message: 'Please enter a valid email address.' });
+  if(errors) {
+      return res.status(400).json({ errors })
   }
 
-  User.findOne({ Email })
-    .then((user) => {
+  const user = await User.findOne({ 'Email': Email })
+
       if (!user) {
         return res.status(404).json({ message: 'There is no registered user with this email.' });
       }
@@ -28,8 +27,5 @@ exports.loginvalidator = (req, res) => {
 
         res.status(200).json({ message: 'You have been logged in successfully.' });
       });
-    })
-    .catch((error) => {
-      res.status(500).json({ message: 'An error occurred while logging in.' });
-    });
+    
 };
