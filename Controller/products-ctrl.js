@@ -29,7 +29,23 @@ addProducts = (req, res) => {
                })
           })
 }
-module.exports = {
-     addProducts
 
+
+
+deleteProduct = async (req, res) => {
+     console.log(req.params.id);
+    const products =  await Products.findOneAndDelete({ _id: req.params.id }) 
+      if (!products) {
+      return res
+      .status(404)
+      .json({ success: false, error: "product not found" })
+      }
+     else{
+      return res.status(200).json({ success: true, data: products })
+      }
+      }
+  
+module.exports = {
+     addProducts,
+     deleteProduct
 }
