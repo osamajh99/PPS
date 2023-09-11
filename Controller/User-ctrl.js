@@ -82,8 +82,22 @@ const UpdateUserInfo = async (req, res) => {
           })
      }
 }
+const deleteUser = async (req, res) => {
+     console.log(req.params.id);
+     const user = await User.findOneAndDelete({ _id: req.params.id })
+     if (!user) {
+          return res
+               .status(404)
+               .json({ success: false, error: `user not found` })
+     }
+     else {
+          return res.status(200).json({ success: true, data: user })
+     }
+}
 module.exports = {
      SignUp,
      SignIn,
-     UpdateUserInfo
+     UpdateUserInfo,
+     deleteUser
 }
+
