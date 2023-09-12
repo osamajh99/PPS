@@ -72,7 +72,27 @@ CreateOrder = async (req, res) => {
      }
 
 }
+
+
+   getordereByuserId = async (req, res) => {
+     try {
+       const orders = await Orders.find({ UserId: req.params.id });
+   
+       if (!orders) {
+         return res.status(404)
+         .json({ success: false, error: `Order not found` });
+       }
+   
+       return res.status(200)
+       .json({ success: true, data: orders });
+     } catch (err) {
+       return res.status(400)
+       .json({ success: false, error: err.message });
+     }
+   };
 module.exports = {
-     CreateOrder
+     CreateOrder,
+     getordereByuserId
+   
 
 }
