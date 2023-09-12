@@ -24,53 +24,34 @@ addProducts = async (req, res) => {
                     success: true,
                     id: dbProduct._id,
                     message: 'products Added and Stocks Updated',
+               
                })
-          }
+          
+        
+          .catch(error => {
+               return res.status(400).json({
+                    error,
+                    message: 'products not added!',
+               })
+          })
+}
      }
-     else {
-          return res.status(400).json({ success: false, error: err })
 
-     }
-};
-const updateProducts = async (req, res) => {
-     const { ProductId, Price, Type, Name, Description } = req.body;
-   
-     if (!ProductId || !Price || !Type || !Name || !Description) {
-       return res.status(400).json({
-         success: false,
-         error: "You must provide ProductId, Price, Type, Name, and Description",
-       });
-     }
-     const updateProduct = await Products.findOneAndUpdate(
-          { '_id': ProductId },
-  {
-    $set: {
-      'Price': Price,
-      'Type': Type,
-      'Name': Name,
-      'Description': Description
-    },
-  }
- );
- 
-   if(updateProducts)
-   {
-     return res.status(201).json({
-          success : true,
-          message : "Product Updated Successfully :)",
-          id : ProductId
-     });
-   }
-   else {
-     return res.status(400).json({
-       error,
-       message: 'stock not updated!',
-     });
-   }
+
 
 };
 
 
+
+
+module.exports = {
+     addProducts,
+     updateProducts,
+     deleteProduct,
+     getproducts
+
+
+}
 getproducts = async (req, res) => {
      try {
        const products = await Products.find({}).exec();
@@ -88,8 +69,9 @@ getproducts = async (req, res) => {
        .json({ success: false, error: err.message });
      }
    };
-   deleteProduct = async (req, res) => {
-     console.log(req.params.id);
+  
+deleteProduct = async (req, res) => {
+          console.log(req.params.id);
     const products =  await Products.findOneAndDelete({ _id: req.params.id }) 
       if (!products) {
       return res
@@ -100,11 +82,3 @@ getproducts = async (req, res) => {
       return res.status(200).json({ success: true, data: products })
       }
       }
-module.exports = {
-     addProducts,
-     updateProducts,
-     deleteProduct,
-     getproducts
-
-
-};
