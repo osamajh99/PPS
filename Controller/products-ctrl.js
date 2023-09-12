@@ -42,7 +42,43 @@ addProducts = async (req, res) => {
 };
 
 
+const updateProducts = async (req, res) => {
+     const { ProductId, Price, Type, Name, Description } = req.body;
+   
+     if (!ProductId || !Price || !Type || !Name || !Description) {
+       return res.status(400).json({
+         success: false,
+         error: "You must provide ProductId, Price, Type, Name, and Description",
+       });
+     }
+     const updateProduct = await Products.findOneAndUpdate(
+          { '_id': ProductId },
+  {
+    $set: {
+      'Price': Price,
+      'Type': Type,
+      'Name': Name,
+      'Description': Description
+    },
+  }
+ );
+ 
+   if(updateProducts)
+   {
+     return res.status(201).json({
+          success : true,
+          message : "Product Updated Successfully :)",
+          id : ProductId
+     });
+   }
+   else {
+     return res.status(400).json({
+       error,
+       message: 'stock not updated!',
+     });
+   }
 
+};
 
 module.exports = {
      addProducts,
@@ -52,6 +88,7 @@ module.exports = {
 
 
 }
+
 getproducts = async (req, res) => {
      try {
        const products = await Products.find({}).exec();

@@ -8,4 +8,5 @@ const OrderCtrl = require('../Controller/Orders-ctrl')
  router.post('/addorders',[checkAuthUser], OrderCtrl.CreateOrder);
 
  router.get('/getorders/:id', OrderCtrl.getordereByuserId);
+
  module.exports = router

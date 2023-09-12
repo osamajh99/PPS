@@ -11,4 +11,5 @@ const ProductsCtrl = require('../Controller/products-ctrl')
  router.delete('/deleteprod/:id',[checkAuthUser,isAdmin], ProductsCtrl.deleteProduct);
   router.get('/getproducts', ProductsCtrl.getproducts);
 
+  
  module.exports = router
