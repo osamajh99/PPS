@@ -1,5 +1,7 @@
 const Products = require('../Model/products-model')
-addProducts = (req, res) => {
+const Stock = require('../Model/Stock-model');
+
+addProducts = async (req, res) => {
      const body = req.body
      if (!body) {
           return res.status(400).json({
@@ -13,15 +15,19 @@ addProducts = (req, res) => {
           return res.status(400).json({ success: false, error: err })
      }
 
-     products
-          .save()
-          .then(() => {
+     const dbProduct = await Products.create(products)
+     if (dbProduct) {
+          const newStock = { Quantity: 8, ProductId:dbProduct._id}
+          const result = await Stock.create(newStock)
+          if(result){
                return res.status(201).json({
                     success: true,
-                    id: products._id,
-                    message: 'products Added!',
+                    id: dbProduct._id,
+                    message: 'products Added and Stocks Updated',
+               
                })
-          })
+          
+        
           .catch(error => {
                return res.status(400).json({
                     error,
@@ -29,7 +35,7 @@ addProducts = (req, res) => {
                })
           })
 }
-
+     }
 
 
 deleteProduct = async (req, res) => {
@@ -48,4 +54,5 @@ deleteProduct = async (req, res) => {
 module.exports = {
      addProducts,
      deleteProduct
+}
 }

@@ -5,7 +5,8 @@ const ProductsCtrl = require('../Controller/products-ctrl')
 
  const router = express.Router()
 
+
  router.post('/products',[checkAuthUser,isAdmin], ProductsCtrl.addProducts);
- router.delete('/deleteprod/:id',[checkAuthUser,isAdmin], ProductsCtrl.deleteProduct);
+
 
  module.exports = router
