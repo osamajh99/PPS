@@ -7,4 +7,5 @@ const OrderCtrl = require('../Controller/Orders-ctrl')
 
  router.post('/addorders',[checkAuthUser], OrderCtrl.CreateOrder)
 
+ router.get('/orders/:id', OrderCtrl.getordereByuserId)
  module.exports = router
