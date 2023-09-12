@@ -24,14 +24,24 @@ addProducts = async (req, res) => {
                     success: true,
                     id: dbProduct._id,
                     message: 'products Added and Stocks Updated',
+               
                })
-          }
+          
+        
+          .catch(error => {
+               return res.status(400).json({
+                    error,
+                    message: 'products not added!',
+               })
+          })
+}
      }
-     else {
-          return res.status(400).json({ success: false, error: err })
 
-     }
+
+
 };
+
+
 const updateProducts = async (req, res) => {
      const { ProductId, Price, Type, Name, Description } = req.body;
    
@@ -106,4 +116,5 @@ module.exports = {
      deleteProduct
 
 
-};
+
+}
