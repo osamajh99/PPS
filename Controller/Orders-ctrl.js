@@ -90,8 +90,64 @@ getordereByuserId = async (req, res) => {
      }
    };
 
+    //Cancel Order  
+
+const deleteOrder = async (req, res) => {
+     const { UserId } = req.body;
+
+     if (!UserId) {
+     return res.status(400).json({
+     success: false,
+     error: 'You must provide UserId',
+     });
+     }
+
+     try {
+     const existOrder = await Orders.findOne({ 'UserId': UserId });
+
+     if (!existOrder) {
+     return res.status(400).json({
+          success: false,
+          error: `There is no order associated with the UserId ${UserId}`,
+     });
+     }
+
+     const orderDeleted = await Orders.deleteOne({ 'UserId': UserId });
+
+     if (orderDeleted.deletedCount===1) {
+     
+     const orderDelete = await Orders.deleteOne({ '_id': UserId });
+     if (orderDelete.deletedCount === 1) {
+          return res.status(200).json({
+          success: true,
+          message: 'Order and associated product Deleted!',
+          });
+     
+     
+     } else {
+          return res.status(500).json({
+          success: false,
+          error: 'Order deleted, but associated product could not be deleted',
+          });
+     }
+     }
+     else {
+     return res.status(500).json({
+          success: false,
+          error: 'Order not deleted!',
+     });
+     }
+     } catch (error) {
+     return res.status(500).json({
+     success: false,
+     error: 'Internal Server Error',
+     });
+     } 
+}  
+
 module.exports = {
      CreateOrder,
      getordereByuserId
+     deleteOrder
 
 }
