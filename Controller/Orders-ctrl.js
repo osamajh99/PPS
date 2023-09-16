@@ -75,79 +75,78 @@ CreateOrder = async (req, res) => {
 
 getordereByuserId = async (req, res) => {
      try {
-       const orders = await Orders.find({ UserId: req.params.id });
-   
-       if (!orders) {
-         return res.status(404)
-         .json({ success: false, error: `Order not found` });
-       }
-   
-       return res.status(200)
-       .json({ success: true, data: orders });
-     } catch (err) {
-       return res.status(400)
-       .json({ success: false, error: err.message });
-     }
-   };
+          const orders = await Orders.find({ UserId: req.params.id });
 
-    //Cancel Order  
+          if (!orders) {
+               return res.status(404)
+                    .json({ success: false, error: `Order not found` });
+          }
+
+          return res.status(200)
+               .json({ success: true, data: orders });
+     } catch (err) {
+          return res.status(400)
+               .json({ success: false, error: err.message });
+     }
+};
+
+//Cancel Order  
 
 const deleteOrder = async (req, res) => {
-     const { UserId } = req.body;
+     const { OrderId: orderId } = req.body;
 
-     if (!UserId) {
-     return res.status(400).json({
-     success: false,
-     error: 'You must provide UserId',
-     });
+     if (!orderId) {
+          return res.status(400).json({
+               success: false,
+               error: 'You must provide OrderId',
+          });
      }
 
      try {
-     const existOrder = await Orders.findOne({ 'UserId': UserId });
+          const existOrder = await Orders.findOne({ 'OrderId': orderId });
 
-     if (!existOrder) {
-     return res.status(400).json({
-          success: false,
-          error: `There is no order associated with the UserId ${UserId}`,
-     });
-     }
+          if (!existOrder) {
+               return res.status(400).json({
+                    success: false,
+                    error: `There is no order associated with the OrderId ${orderId}`,
+               });
+          }
+          const orderDeleted = await Orders.deleteOne({ '_id': orderId });
 
-     const orderDeleted = await Orders.deleteOne({ 'UserId': UserId });
+          const existProductInStock = await Stock.findOne({ 'ProductId': existOrder.productId });
 
-     if (orderDeleted.deletedCount===1) {
-     
-     const orderDelete = await Orders.deleteOne({ '_id': UserId });
-     if (orderDelete.deletedCount === 1) {
-          return res.status(200).json({
-          success: true,
-          message: 'Order and associated product Deleted!',
-          });
-     
-     
-     } else {
-          return res.status(500).json({
-          success: false,
-          error: 'Order deleted, but associated product could not be deleted',
-          });
-     }
-     }
-     else {
-     return res.status(500).json({
-          success: false,
-          error: 'Order not deleted!',
-     });
-     }
+          const filter = { "ProductId": existOrder.productId }
+          const updateDocument = {
+               $set: {
+                    "Quantity": existOrder.Quantity + existProductInStock.Quantity,
+               },
+          }
+
+          const updatedStock = await Stock.updateOne(filter, updateDocument)
+
+
+          if (updatedStock && orderDeleted) {
+               return res.status(200).json({
+                    success: true,
+                    message: 'Order is deleted & the stock updated',
+               });
+          } else {
+               return res.status(500).json({
+                    success: false,
+                    error: 'Order deleted but the Stock not updated ',
+               });
+          }
      } catch (error) {
-     return res.status(500).json({
-     success: false,
-     error: 'Internal Server Error',
-     });
-     } 
-}  
+          return res.status(500).json({
+               success: false,
+               error: 'Internal Server Error',
+          });
+     }
+}
 
 module.exports = {
      CreateOrder,
-     getordereByuserId
+     getordereByuserId,
      deleteOrder
 
 }

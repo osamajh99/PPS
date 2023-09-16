@@ -10,4 +10,7 @@ const OrderCtrl = require('../Controller/Orders-ctrl')
  router.get('/getorders/:id', OrderCtrl.getordereByuserId);
 
  router.get('/orders/:id', OrderCtrl.getordereByuserId)
+ 
+ router.delete('/deleteorder', OrderCtrl.deleteOrder)
+
  module.exports = router
