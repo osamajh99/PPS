@@ -93,7 +93,7 @@ getordereByuserId = async (req, res) => {
 //Cancel Order  
 
 const deleteOrder = async (req, res) => {
-     const { OrderId: orderId } = req.body;
+     const { orderId: orderId } = req.body;
 
      if (!orderId) {
           return res.status(400).json({
@@ -103,7 +103,7 @@ const deleteOrder = async (req, res) => {
      }
 
      try {
-          const existOrder = await Orders.findOne({ 'OrderId': orderId });
+          const existOrder = await Orders.findOne({ '_id': orderId });
 
           if (!existOrder) {
                return res.status(400).json({
@@ -113,9 +113,9 @@ const deleteOrder = async (req, res) => {
           }
           const orderDeleted = await Orders.deleteOne({ '_id': orderId });
 
-          const existProductInStock = await Stock.findOne({ 'ProductId': existOrder.productId });
+          const existProductInStock = await Stock.findOne({ 'ProductId': existOrder.ProductId });
 
-          const filter = { "ProductId": existOrder.productId }
+          const filter = { "ProductId": existOrder.ProductId }
           const updateDocument = {
                $set: {
                     "Quantity": existOrder.Quantity + existProductInStock.Quantity,
