@@ -6,7 +6,7 @@ const ProductsCtrl = require('../Controller/products-ctrl')
  const router = express.Router()
 
 
- router.post('/products',[checkAuthUser,isAdmin], ProductsCtrl.addProducts);
+ router.post('/addproducts',[checkAuthUser,isAdmin], ProductsCtrl.addProducts);
 
  router.delete('/deleteprod/:id',[checkAuthUser,isAdmin], ProductsCtrl.deleteProduct);
   router.get('/getproducts', ProductsCtrl.getproducts);

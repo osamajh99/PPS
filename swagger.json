@@ -104,6 +104,183 @@
         ]
       }
     },
+    "/updateproducts": {
+      "put": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Update a product in the store",
+        "description": "Update an existing product in the store",
+        "operationId": "updateProducts",
+        "requestBody": {
+          "description": "Product information to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/product"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/product"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "You must provide ProductId, Price, Type, Name, and Description"
+          },
+          "200": {
+            "description": "Product updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/product"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not updated!"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:product",
+              "read:product"
+            ]
+          }
+        ]
+      }
+    },
+    "/deleteproduct/{ProductId}": {
+      "delete": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Delete a product from the store",
+        "description": "Delete an existing product from the store",
+        "operationId": "deleteProduct",
+        "parameters": [
+          {
+            "name": "ProductId",
+            "in": "path",
+            "description": "The ID of the product to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Product id to delete",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/product"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/product"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Product deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "$ref": "#/components/schemas/product"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": {}
+                  },
+                  "$ref": "#/components/schemas/product"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "read:product",
+              "write:product"
+            ]
+          }
+        ]
+      }
+    },
+    "/getproducts": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Get a list of products",
+        "description": "Retrieve a list of all products in the store",
+        "operationId": "getProducts",
+        "responses": {
+          "200": {
+            "description": "Successful response with a list of products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/product"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Products not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type":"string",
+                  "$ref":"#/components/schemas/product"
+                }
+              }
+            }
+          },
+          "400":{
+            "description":"Bad request",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"string",
+                  "$ref":"#/components/schemas/product"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/pet/findByStatus": {
       "get": {
         "tags": [
