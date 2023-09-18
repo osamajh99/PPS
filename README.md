@@ -1,7 +1,7 @@
 # PPS
 Product Purchase System 
 *Prepared By:
-1.Loay/n
+1.Loay
 2.Osama
 3.Safaa
 4.Saja
