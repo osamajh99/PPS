@@ -24,6 +24,7 @@ Create Sign Up for user.<br>
 2.Osama:<br>
 Create End Point user login,<br>
 Cancel Order.<br>
+
 3.Safaa:(manager)<br>
 Lead the team to the Right Direction,<br>
 Create the GitHub and Trello,<br>
@@ -47,7 +48,8 @@ Add orders,<br>
 Create Table Order And Relations,<br>
 Remove Products By Admin,<br>
 Select AllProducts,<br>
-GetOrderByUserID.<br>
+GetOrderByUserID.<be>
+
 5.Sudool:(Quality Assurance - QA)<br>
 Delete User BY admin From Table User,<br>
 add the Documentation,<br>
