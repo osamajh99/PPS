@@ -9,7 +9,7 @@ const ProductsCtrl = require('../Controller/products-ctrl')
  router.post('/addproducts',[checkAuthUser,isAdmin], ProductsCtrl.addProducts);
 
  router.delete('/deleteprod/:id',[checkAuthUser,isAdmin], ProductsCtrl.deleteProduct);
-  router.get('/getproducts', ProductsCtrl.getproducts);
+  router.get('/getproducts',[checkAuthUser,isAdmin], ProductsCtrl.getproducts);
 
   
  module.exports = router

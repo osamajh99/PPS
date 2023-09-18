@@ -7,7 +7,7 @@ const { checkAuthUser, isAdmin  } = require("../Middlewares/checkAuthUser");
 
  router.post('/signup',UserCtrl.SignUp)
  router.post('/signIn',UserCtrl.SignIn)
- router.post('/updateuserinfo/:id',[checkAuthUser],UserCtrl.UpdateUserInfo)
+ router.put('/updateuserinfo/:id',[checkAuthUser],UserCtrl.UpdateUserInfo)
  router.delete('/deleteuser/:id',[checkAuthUser,isAdmin], UserCtrl.deleteUser)
  module.exports = router
 

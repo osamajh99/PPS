@@ -7,10 +7,10 @@ const OrderCtrl = require('../Controller/Orders-ctrl')
 
  router.post('/addorders',[checkAuthUser], OrderCtrl.CreateOrder);
 
- router.get('/getorders/:id', OrderCtrl.getordereByuserId);
+ router.get('/getorders/:id',[checkAuthUser], OrderCtrl.getordereByuserId);
 
- router.get('/orders/:id', OrderCtrl.getordereByuserId)
+ router.get('/orders/:id',[checkAuthUser], OrderCtrl.getordereByuserId)
  
- router.delete('/deleteorder', OrderCtrl.deleteOrder)
+ router.delete('/deleteorder',[checkAuthUser], OrderCtrl.deleteOrder)
 
  module.exports = router
