@@ -170,7 +170,7 @@
         ]
       }
     },
-    "/api/product/deleteproduct/{ProductId}": {
+    "/api/product/deleteprod/{ProductId}": {
       "delete": {
         "tags": [
           "product"
