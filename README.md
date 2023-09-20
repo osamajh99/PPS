@@ -60,12 +60,13 @@ Get UserList By Admin<br>
 
 7.Yousef:<br>
 add project Setup and choose NAME,<br>
-Create Table Stocks And Relationsm,<br>
+Create Table Stocks And Relations,<br>
 Create Design pattern MVC,<br>
 AddStock,<br>
 Delete Stock by Admin,<br>
 Update StockBy Admin,<br>
-Update Products By Admin.<br>
+Update Products By Admin,<br>
+Add endpoints in swagger file.<br>
 
 *Requirements:<br>
 VS code,<br>

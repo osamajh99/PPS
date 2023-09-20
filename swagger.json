@@ -50,7 +50,7 @@
     }
   ],
   "paths": {
-    "/addproducts": {
+    "/api/product/addproducts": {
       "post": {
         "tags": [
           "product"
@@ -58,6 +58,17 @@
         "summary": "Add a new product to the store",
         "description": "Add a new product to the store",
         "operationId": "addproducts",
+          "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "description": "Create a new product in the store",
           "content": {
@@ -101,15 +112,14 @@
         },
         "security": [
           {
-            "petstore_auth": [
-              "write:product",
-              "read:product"
-            ]
+            
+            "x-access-token": []
+          
           }
         ]
       }
     },
-    "/updateproducts": {
+    "/api/product/updateproducts": {
       "put": {
         "tags": [
           "product"
@@ -117,6 +127,17 @@
         "summary": "Update a product in the store",
         "description": "Update an existing product in the store",
         "operationId": "updateProducts",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "description": "Product information to update",
           "content": {
@@ -158,6 +179,11 @@
         },
         "security": [
           {
+            
+              "x-access-token": []
+            
+          },
+          {
             "checkAuthUser": [
               "write:product",
               "read:product"
@@ -166,7 +192,7 @@
         ]
       }
     },
-    "/deleteproduct/{ProductId}": {
+    "/api/product/deleteproduct/{ProductId}": {
       "delete": {
         "tags": [
           "product"
@@ -183,7 +209,17 @@
             "schema": {
               "type": "string"
             }
-          }
+          },
+          
+            {
+              "name": "x-access-token",
+              "in": "header",
+              "description": "",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
         ],
         "requestBody": {
           "description": "Product id to delete",
@@ -234,15 +270,18 @@
         },
         "security": [
           {
-            "petstore_auth": [
-              "read:product",
-              "write:product"
+            "x-access-token": []
+          },
+          {
+           "checkAuthUser": [
+              "write:product",
+              "read:product"
             ]
           }
         ]
       }
     },
-    "/getproducts": {
+    "/api/product/getproducts": {
       "get": {
         "tags": [
           "product"
@@ -250,6 +289,17 @@
         "summary": "Get a list of products",
         "description": "Retrieve a list of all products in the store",
         "operationId": "getProducts",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response with a list of products",
@@ -283,7 +333,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ]
       }
     },
     "/api/stock/addstock": {
@@ -727,7 +782,7 @@
         }
       }
     },
-    "/AddOrder": {
+    "/api/order/addorders": {
       "post": {
         "tags": [
           "order"
@@ -735,6 +790,17 @@
         "summary": "Create order",
         "description": "Add new order.",
         "operationId": "createOrder",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "description": "Created order object",
           "content": {
@@ -774,7 +840,7 @@
         }
       }
     },
-    "/getorder/{UserId}": {
+    "/api/order/getorders/{UserId}": {
       "get": {
         "tags": [
           "order"
@@ -782,17 +848,31 @@
         "summary": "Find order by UserID",
         "description": "Returns a list of orders for user",
         "operationId": "getOrderByUserId",
+        
         "parameters": [
           {
-            "name": "userId",
+            "name": "UserId",
+
             "in": "path",
             "description": "ID of user to return",
             "required": true,
             "schema": {
               "type": "string"
             }
-          }
+          },
+         
+            {
+              "name": "x-access-token",
+              "in": "header",
+              "description": "",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+       
         ],
+
         "responses": {
           "200": {
             "description": "successful operation",
@@ -816,20 +896,12 @@
             "description": "order not found"
           }
         },
-        "security": [
-          {
-            "x-access-token": []
-          },
-          {
-            "petstore_auth": [
-              "write:order",
-              "read:order"
-            ]
-          }
-        ]
+        "security": []
+        
+
       }
     },
-    "/deleteorder/{orderId}": {
+    "/api/order/deleteorder": {
       "delete": {
         "tags": [
           "order"
@@ -839,14 +911,16 @@
         "operationId": "deleteorder",
         "parameters": [
           {
-            "name": "orderId",
-            "in": "path",
-            "description": "The ID of the order to delete",
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string"
             }
           }
+    
+         
         ],
         "requestBody": {
           "description": "order id to delete",
@@ -895,14 +969,8 @@
             }
           }
         },
-        "security": [
-          {
-            "petstore_auth": [
-              "read:order",
-              "write:order"
-            ]
-          }
-        ]
+        "security": []
+          
       }
     }
   },
@@ -914,7 +982,7 @@
           "ProductId": {
             "required": true,
             "type": "string",
-            "example": "12345",
+            "example": "65065c37eb2352ebd4a45e73",
             "description": "The ID of the product associated with the stock"
           },
           "Quantity": {
@@ -931,46 +999,31 @@
       "Order": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "int64",
-            "example": 10
-          },
+      
           "UserId": {
             "type": "string",
-            "format": "int64",
-            "example": 198772
+         "example":"64f8bbcc0c173085185468c0"
           },
-          "quantity": {
+          "Quantity": {
             "type": "integer",
             "format": "int32",
             "example": 1
           },
           "OrderDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example":"2023-09-06T17:50:04.557+00:00"
           },
           "ProductId": {
-            "type": "string"
+            "type": "string",
+            "example":"64fec4c14a66c0f014b5324a"
           },
           "Price": {
             "type": "integer",
             "format": "int64",
-            "example": 198772
-          },
-          "status": {
-            "type": "string",
-            "description": "Order Status",
-            "example": "approved",
-            "enum": [
-              "placed",
-              "approved",
-              "delivered"
-            ]
-          },
-          "complete": {
-            "type": "boolean"
+            "example": 19
           }
+         
         },
         "xml": {
           "name": "order"
