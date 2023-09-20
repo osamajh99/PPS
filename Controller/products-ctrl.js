@@ -18,7 +18,7 @@ const addProducts = async (req, res) => {
 
     const dbProduct = await Products.create(products);
     if (dbProduct) {
-      const newStock = { Quantity: 8, ProductId: dbProduct._id };
+      const newStock = { Quantity: 1, ProductId: dbProduct._id };
       const result = await Stock.create(newStock);
 
       if (result) {
@@ -42,7 +42,7 @@ const addProducts = async (req, res) => {
 
 const updateProducts = async (req, res) => {
      const { ProductId, Price, Type, Name, Description } = req.body;
-   
+   console.log(ProductId, Price, Type, Name, Description)
      if (!ProductId || !Price || !Type || !Name || !Description) {
        return res.status(400).json({
          success: false,

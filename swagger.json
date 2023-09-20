@@ -2,21 +2,10 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Product Purchase System(PPS) 1.1.0",
-    "description": "Marketplaces offer immense growth potential for businesses within B2C and B2B industries. By adopting a marketplace model, companies have the opportunity to scale at a much quicker pace while reducing risk.\nwe provide multi endpoints to making changes to the application and get the data and here the all api EndPoints documentation.\nSome useful links:\n- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)\n- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
-    "termsOfService": "http://swagger.io/terms/",
-    "contact": {
-      "email": "apiteam@swagger.io"
-    },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    },
+    "description": "Marketplaces offer immense growth potential for businesses within B2C and B2B industries. By adopting a marketplace model, companies have the opportunity to scale at a much quicker pace while reducing risk.\nwe provide multi endpoints to making changes to the application and get the data and here the all api EndPoints documentation.\n",
     "version": "1.0.11"
   },
-  "externalDocs": {
-    "description": "Find out more about Swagger",
-    "url": "http://swagger.io"
-  },
+  
   "servers": [
     {
       "url": "http://localhost:3000/",
@@ -74,17 +63,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/product"
+                "$ref": "#/components/schemas/Product"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/product"
+                "$ref": "#/components/schemas/Product"
               }
             },
             "application/x-www-form-urlencoded": {
               "schema": {
-                "$ref": "#/components/schemas/product"
+                "$ref": "#/components/schemas/Product"
               }
             }
           },
@@ -96,12 +85,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/product"
+                  "$ref": "#/components/schemas/Product"
                 }
               },
               "application/xml": {
                 "schema": {
-                  "$ref": "#/components/schemas/product"
+                  "$ref": "#/components/schemas/Product"
                 }
               }
             }
@@ -143,17 +132,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/product"
+                "$ref": "#/components/schemas/ProductUpdate"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/product"
+                "$ref": "#/components/schemas/ProductUpdate"
               }
             },
             "application/x-www-form-urlencoded": {
               "schema": {
-                "$ref": "#/components/schemas/product"
+                "$ref": "#/components/schemas/ProductUpdate"
               }
             }
           },
@@ -168,7 +157,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/product"
+                  "$ref": "#/components/schemas/ProductUpdate"
                 }
               }
             }
@@ -178,17 +167,6 @@
           }
         },
         "security": [
-          {
-            
-              "x-access-token": []
-            
-          },
-          {
-            "checkAuthUser": [
-              "write:product",
-              "read:product"
-            ]
-          }
         ]
       }
     },
@@ -226,17 +204,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/product"
+                "$ref": "#/components/schemas/Product"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/product"
+                "$ref": "#/components/schemas/Product"
               }
             },
             "application/x-www-form-urlencoded": {
               "schema": {
-                "$ref": "#/components/schemas/product"
+                "$ref": "#/components/schemas/Product"
               }
             }
           },
@@ -249,7 +227,7 @@
               "application/json": {
                 "schema": {
                   "type": "string",
-                  "$ref": "#/components/schemas/product"
+                  "$ref": "#/components/schemas/Product"
                 }
               }
             }
@@ -262,22 +240,14 @@
                   "additionalProperties": {
                     "type": {}
                   },
-                  "$ref": "#/components/schemas/product"
+                  "$ref": "#/components/schemas/Product"
                 }
               }
             }
           }
         },
         "security": [
-          {
-            "x-access-token": []
-          },
-          {
-           "checkAuthUser": [
-              "write:product",
-              "read:product"
-            ]
-          }
+          
         ]
       }
     },
@@ -306,7 +276,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/product"
+                  "$ref": "#/components/schemas/Product"
                 }
               }
             }
@@ -317,7 +287,7 @@
               "application/json": {
                 "schema": {
                   "type": "string",
-                  "$ref": "#/components/schemas/product"
+                  "$ref": "#/components/schemas/Product"
                 }
               }
             }
@@ -328,7 +298,7 @@
               "application/json": {
                 "schema": {
                   "type": "string",
-                  "$ref": "#/components/schemas/product"
+                  "$ref": "#/components/schemas/Product"
                 }
               }
             }
@@ -1029,74 +999,7 @@
           "name": "order"
         }
       },
-      "Customer": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 100000
-          },
-          "username": {
-            "type": "string",
-            "example": "fehguy"
-          },
-          "address": {
-            "type": "array",
-            "xml": {
-              "name": "addresses",
-              "wrapped": true
-            },
-            "items": {
-              "$ref": "#/components/schemas/Address"
-            }
-          }
-        },
-        "xml": {
-          "name": "customer"
-        }
-      },
-      "Address": {
-        "type": "object",
-        "properties": {
-          "street": {
-            "type": "string",
-            "example": "437 Lytton"
-          },
-          "city": {
-            "type": "string",
-            "example": "Palo Alto"
-          },
-          "state": {
-            "type": "string",
-            "example": "CA"
-          },
-          "zip": {
-            "type": "string",
-            "example": "94301"
-          }
-        },
-        "xml": {
-          "name": "address"
-        }
-      },
-      "Category": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 1
-          },
-          "name": {
-            "type": "string",
-            "example": "Dogs"
-          }
-        },
-        "xml": {
-          "name": "category"
-        }
-      },
+
       "User": {
         "type": "object",
         "properties": {
@@ -1170,103 +1073,56 @@
           "name": "user"
         }
       },
-      "Tag": {
+      "Product": {
         "type": "object",
         "properties": {
-          "id": {
+          "Price": {
             "type": "integer",
-            "format": "int64"
+            "example": "20"
           },
-          "name": {
-            "type": "string"
+          "Type": {
+            "type": "string",
+            "example": "home "
+          },
+          "Name": {
+            "type": "string",
+            "example": "product name"
+          },
+          "Descrption": {
+            "type": "string",
+            "example": "for home"
           }
         },
-        "required": [
-          "UserName",
-          "Password",
-          "Email",
-          "PhoneNumber",
-          "Address",
-          "IsAdmin"
-        ],
         "xml": {
-          "name": "tag"
+          "name": "user"
         }
       },
-      "Pet": {
-        "required": [
-          "UserName",
-          "Password",
-          "Email",
-          "PhoneNumber",
-          "Address",
-          "IsAdmin"
-        ],
+      "ProductUpdate": {
         "type": "object",
         "properties": {
-          "id": {
+          "ProductId": {
             "type": "integer",
-            "format": "int64",
-            "example": 10
+            "example": "650b031640e5075992f360b8"
           },
-          "name": {
+          "Price": {
+            "type": "integer",
+            "example": "20"
+          },
+          "Type": {
             "type": "string",
-            "example": "doggie"
+            "example": "home "
           },
-          "category": {
-            "$ref": "#/components/schemas/Category"
-          },
-          "photoUrls": {
-            "type": "array",
-            "xml": {
-              "wrapped": true
-            },
-            "items": {
-              "type": "string",
-              "xml": {
-                "name": "photoUrl"
-              }
-            }
-          },
-          "tags": {
-            "type": "array",
-            "xml": {
-              "wrapped": true
-            },
-            "items": {
-              "$ref": "#/components/schemas/Tag"
-            }
-          },
-          "status": {
+          "Name": {
             "type": "string",
-            "description": "pet status in the store",
-            "enum": [
-              "available",
-              "pending",
-              "sold"
-            ]
+            "example": "product name"
+          },
+          "Description": {
+            "type": "string",
+            "example": "for home"
           }
         },
         "xml": {
-          "name": "pet"
-        }
-      },
-      "ApiResponse": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "type": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "xml": {
-          "name": "##default"
+          "name": "user"
         }
       }
     },
