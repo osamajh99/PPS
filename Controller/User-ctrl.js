@@ -12,14 +12,12 @@ const SignUp = async (req, res) => {
      // Check if the req.body valid or not
      const { Email, Password, UserName, PhoneNumber, Address, IsAdmin } = req.body
      const errors = SignUpValidation({ Email, Password })
-
      if (errors) {
           return res.status(400).json({ errors })
      }
 
      // Check if the Email is already exists 
      const oldUser = await User.findOne({ Email })
-
      if (oldUser) {
           return res.status(409).json({ error: 'User is already exists' })
      }
@@ -66,10 +64,10 @@ const SignIn = async (req, res) => {
 }
 
 const UpdateUserInfo = async (req, res) => {
-     const { UserName, PhoneNumber, Address } = req.body
+     const { UserName, PhoneNumber, Address , Password} = req.body
      const userId = req.params.id
      const filter = { _id: userId };
-     const update = { PhoneNumber: PhoneNumber, Address: Address, UserName: UserName };
+     const update = { PhoneNumber: PhoneNumber, Address: Address, UserName: UserName ,Password: Password};
      const userObj = await User.findOneAndUpdate(filter, update)
      if (!userObj) {
           return res.status(400).json({ error: 'User Not Found' })
@@ -83,7 +81,6 @@ const UpdateUserInfo = async (req, res) => {
      }
 }
 const deleteUser = async (req, res) => {
-     console.log(req.params.id);
      const user = await User.findOneAndDelete({ _id: req.params.id })
      if (!user) {
           return res

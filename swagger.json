@@ -2,24 +2,14 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Product Purchase System(PPS) 1.1.0",
-    "description": "Marketplaces offer immense growth potential for businesses within B2C and B2B industries. By adopting a marketplace model, companies have the opportunity to scale at a much quicker pace while reducing risk.\nwe provide multi endpoints to making changes to the application and get the data and here the all api EndPoints documentation.\nSome useful links:\n- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)\n- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
-    "termsOfService": "http://swagger.io/terms/",
-    "contact": {
-      "email": "apiteam@swagger.io"
-    },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    },
+    "description": "Marketplaces offer immense growth potential for businesses within B2C and B2B industries. By adopting a marketplace model, companies have the opportunity to scale at a much quicker pace while reducing risk.\nwe provide multi endpoints to making changes to the application and get the data and here the all api EndPoints documentation.\n",
     "version": "1.0.11"
   },
-  "externalDocs": {
-    "description": "Find out more about Swagger",
-    "url": "http://swagger.io"
-  },
+  
   "servers": [
     {
-      "url": "https://petstore3.swagger.io/api/v3"
+      "url": "http://localhost:3000/",
+      "description": "Local server"
     }
   ],
   "tags": [
@@ -32,20 +22,24 @@
       }
     },
     {
-      "name": "store",
-      "description": "Access to Petstore orders",
+      "name": "order",
+      "description": "Everything about your order",
       "externalDocs": {
-        "description": "Find out more about our store",
+        "description": "Find out more about our order",
         "url": "http://swagger.io"
       }
     },
     {
       "name": "user",
       "description": "Operations about user"
+    },
+    {
+      "name": "stock",
+      "description": "Operations about stock"
     }
   ],
   "paths": {
-    "/addproducts": {
+    "/api/product/addproducts": {
       "post": {
         "tags": [
           "product"
@@ -53,22 +47,33 @@
         "summary": "Add a new product to the store",
         "description": "Add a new product to the store",
         "operationId": "addproducts",
+          "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "description": "Create a new product in the store",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/product"
+                "$ref": "#/components/schemas/Product"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/product"
+                "$ref": "#/components/schemas/Product"
               }
             },
             "application/x-www-form-urlencoded": {
               "schema": {
-                "$ref": "#/components/schemas/product"
+                "$ref": "#/components/schemas/Product"
               }
             }
           },
@@ -80,12 +85,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/product"
+                  "$ref": "#/components/schemas/Product"
                 }
               },
               "application/xml": {
                 "schema": {
-                  "$ref": "#/components/schemas/product"
+                  "$ref": "#/components/schemas/Product"
                 }
               }
             }
@@ -96,499 +101,428 @@
         },
         "security": [
           {
-            "petstore_auth": [
-              "write:product",
-              "read:product"
-            ]
+            
+            "x-access-token": []
+          
           }
         ]
       }
     },
-    "/pet/findByStatus": {
-      "get": {
+    "/api/product/updateproducts": {
+      "put": {
         "tags": [
-          "pet"
+          "product"
         ],
-        "summary": "Finds Pets by status",
-        "description": "Multiple status values can be provided with comma separated strings",
-        "operationId": "findPetsByStatus",
+        "summary": "Update a product in the store",
+        "description": "Update an existing product in the store",
+        "operationId": "updateProducts",
         "parameters": [
           {
-            "name": "status",
-            "in": "query",
-            "description": "Status values that need to be considered for filter",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "default": "available",
-              "enum": [
-                "available",
-                "pending",
-                "sold"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid status value"
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      }
-    },
-    "/pet/findByTags": {
-      "get": {
-        "tags": [
-          "pet"
-        ],
-        "summary": "Finds Pets by tags",
-        "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
-        "operationId": "findPetsByTags",
-        "parameters": [
-          {
-            "name": "tags",
-            "in": "query",
-            "description": "Tags to filter by",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid tag value"
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      }
-    },
-    "/pet/{petId}": {
-      "get": {
-        "tags": [
-          "pet"
-        ],
-        "summary": "Find pet by ID",
-        "description": "Returns a single pet",
-        "operationId": "getPetById",
-        "parameters": [
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "ID of pet to return",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Pet not found"
-          }
-        },
-        "security": [
-          {
-            "api_key": []
-          },
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "pet"
-        ],
-        "summary": "Updates a pet in the store with form data",
-        "description": "",
-        "operationId": "updatePetWithForm",
-        "parameters": [
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "ID of pet that needs to be updated",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "description": "Name of pet that needs to be updated",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "Status of pet that needs to be updated",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "405": {
-            "description": "Invalid input"
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "pet"
-        ],
-        "summary": "Deletes a pet",
-        "description": "delete a pet",
-        "operationId": "deletePet",
-        "parameters": [
-          {
-            "name": "api_key",
+            "name": "x-access-token",
             "in": "header",
             "description": "",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "Pet id to delete",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Invalid pet value"
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      }
-    },
-    "/pet/{petId}/uploadImage": {
-      "post": {
-        "tags": [
-          "pet"
-        ],
-        "summary": "uploads an image",
-        "description": "",
-        "operationId": "uploadFile",
-        "parameters": [
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "ID of pet to update",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "additionalMetadata",
-            "in": "query",
-            "description": "Additional Metadata",
-            "required": false,
             "schema": {
               "type": "string"
             }
           }
         ],
         "requestBody": {
-          "content": {
-            "application/octet-stream": {
-              "schema": {
-                "type": "string",
-                "format": "binary"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      }
-    },
-    "/store/inventory": {
-      "get": {
-        "tags": [
-          "store"
-        ],
-        "summary": "Returns pet inventories by status",
-        "description": "Returns a map of status codes to quantities",
-        "operationId": "getInventory",
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "integer",
-                    "format": "int32"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "api_key": []
-          }
-        ]
-      }
-    },
-    "/store/order": {
-      "post": {
-        "tags": [
-          "store"
-        ],
-        "summary": "Place an order for a pet",
-        "description": "Place a new order in the store",
-        "operationId": "placeOrder",
-        "requestBody": {
+          "description": "Product information to update",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Order"
+                "$ref": "#/components/schemas/ProductUpdate"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/Order"
+                "$ref": "#/components/schemas/ProductUpdate"
               }
             },
             "application/x-www-form-urlencoded": {
               "schema": {
-                "$ref": "#/components/schemas/Order"
+                "$ref": "#/components/schemas/ProductUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "You must provide ProductId, Price, Type, Name, and Description"
+          },
+          "200": {
+            "description": "Product updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductUpdate"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not updated!"
+          }
+        },
+        "security": [
+        ]
+      }
+    },
+    "/api/product/deleteprod/{ProductId}": {
+      "delete": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Delete a product from the store",
+        "description": "Delete an existing product from the store",
+        "operationId": "deleteProduct",
+        "parameters": [
+          {
+            "name": "ProductId",
+            "in": "path",
+            "description": "The ID of the product to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          
+            {
+              "name": "x-access-token",
+              "in": "header",
+              "description": "",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+        ],
+        "requestBody": {
+          "description": "Product id to delete",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Product deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": {}
+                  },
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          
+        ]
+      }
+    },
+    "/api/product/getproducts": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Get a list of products",
+        "description": "Retrieve a list of all products in the store",
+        "operationId": "getProducts",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with a list of products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Products not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ]
+      }
+    },
+    "/api/stock/addstock": {
+      "post": {
+        "tags": [
+          "stock"
+        ],
+        "summary": " Add a new stock entry",
+        "description": " Add a new stock entry to the inventory",
+        "operationId": "addstock",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Stock information to add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Stock"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Stock"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Stock"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Stock added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stock"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or stock not added"
+          }
+        },
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ]
+      }
+    },
+    "/api/stock/updatestock": {
+      "put": {
+        "tags": [
+          "stock"
+        ],
+        "summary": "Update stock quantity",
+        "description": "Update the quantity of a product in stock",
+        "operationId": " updatestock",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Stock information to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Stock"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Stock"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Stock"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Stock quantity updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stock"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or stock not updated"
+          }
+        },
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ]
+      }
+    },
+    "/api/stock/deletestock": {
+      "delete": {
+        "tags": [
+          "stock"
+        ],
+        "summary": "Delete stock and associated product",
+        "description": " Delete a product from stock and its associated product",
+        "operationId": "deletestock",
+        "parameters": [
+          {
+            "name": "ProductId",
+            "in": "body",
+            "description": "The ID of the product to delete from stock and its associated product",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "1nci2dj3kd45sfn54n"
+            }
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Stock information to delete",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Stock"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Stock"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Stock"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "successful operation",
+            "description": "Stock and associated product deleted successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
-                }
-              }
-            }
-          },
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/store/order/{orderId}": {
-      "get": {
-        "tags": [
-          "store"
-        ],
-        "summary": "Find purchase order by ID",
-        "description": "For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.",
-        "operationId": "getOrderById",
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "description": "ID of order that needs to be fetched",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "$ref": "#/components/schemas/Stock"
                 }
               },
               "application/xml": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "$ref": "#/components/schemas/Stock"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Invalid request or product not found in stock"
           },
-          "404": {
-            "description": "Order not found"
+          "500": {
+            "description": "Internal server error"
           }
-        }
-      },
-      "delete": {
-        "tags": [
-          "store"
-        ],
-        "summary": "Delete purchase order by ID",
-        "description": "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors",
-        "operationId": "deleteOrder",
-        "parameters": [
+        },
+        "security": [
           {
-            "name": "orderId",
-            "in": "path",
-            "description": "ID of the order that needs to be deleted",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "x-access-token": []
           }
-        ],
-        "responses": {
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Order not found"
-          }
-        }
+        ]
       }
     },
-    "/user": {
+    "/api/user/signup": {
       "post": {
         "tags": [
           "user"
         ],
         "summary": "Create user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "createUser",
+        "description": "This can only be done by making registarion.",
+        "operationId": "SignUp",
         "requestBody": {
           "description": "Created user object",
           "content": {
@@ -610,6 +544,31 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "You have been successfully registered",
+            "headers": {},
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "409": {
+            "description": "User is already exists"
+          },
+          "403": {
+            "description": "please try another passowrd"
+          },
           "default": {
             "description": "successful operation",
             "content": {
@@ -628,95 +587,39 @@
         }
       }
     },
-    "/user/createWithList": {
+    "/api/user/signin": {
       "post": {
         "tags": [
           "user"
         ],
-        "summary": "Creates list of users with given input array",
-        "description": "Creates list of users with given input array",
-        "operationId": "createUsersWithListInput",
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "SignIn",
+        "parameters": [],
         "requestBody": {
+          "description": "signIn",
           "content": {
             "application/json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/User"
-                }
+                "$ref": "#/components/schemas/SignIn"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/SignIn"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/SignIn"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      }
-    },
-    "/user/login": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Logs user into the system",
-        "description": "",
-        "operationId": "loginUser",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "query",
-            "description": "The user name for login",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "description": "The password for login in clear text",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
             "description": "successful operation",
-            "headers": {
-              "X-Rate-Limit": {
-                "description": "calls per hour allowed by the user",
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "X-Expires-After": {
-                "description": "date in UTC when token expires",
-                "schema": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
-            },
+            "headers": {},
             "content": {
               "application/xml": {
                 "schema": {
@@ -736,35 +639,28 @@
         }
       }
     },
-    "/user/logout": {
-      "get": {
+    "/api/user/deleteuser/{id}": {
+      "delete": {
         "tags": [
           "user"
         ],
-        "summary": "Logs out current logged in user session",
+        "summary": "Logs out current logged in user session and remove frm database",
         "description": "",
-        "operationId": "logoutUser",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      }
-    },
-    "/user/{username}": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Get user by user name",
-        "description": "",
-        "operationId": "getUserByName",
+        "operationId": "deleteUser",
         "parameters": [
           {
-            "name": "username",
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
             "in": "path",
-            "description": "The name that needs to be fetched. Use user1 for testing. ",
+            "description": "user id to delete",
             "required": true,
             "schema": {
               "type": "string"
@@ -772,41 +668,39 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid username supplied"
-          },
-          "404": {
-            "description": "User not found"
+          "default": {
+            "description": "successful operation"
           }
-        }
-      },
+        },
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ]
+      }
+    },
+    "/api/user/updateuserinfo/{id}": {
       "put": {
         "tags": [
           "user"
         ],
-        "summary": "Update user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "updateUser",
+        "summary": "update user by user id",
+        "description": "",
+        "operationId": "UpdateUserInfo",
         "parameters": [
           {
-            "name": "username",
+            "name": "id",
             "in": "path",
-            "description": "name that need to be deleted",
+            "description": "The name that needs to be fetched. Use id for testing. ",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string"
@@ -814,298 +708,421 @@
           }
         ],
         "requestBody": {
-          "description": "Update an existent user in the store",
+          "description": "Created user object",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserUpdate"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserUpdate"
               }
             },
             "application/x-www-form-urlencoded": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserUpdate"
               }
             }
           }
         },
         "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Delete user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "deleteUser",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "description": "The name that needs to be deleted",
-            "required": true,
-            "schema": {
-              "type": "string"
+          "200": {
+            "description": "User Updated!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserUpdate"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserUpdate"
+                }
+              }
             }
-          }
-        ],
-        "responses": {
+          },
           "400": {
-            "description": "Invalid username supplied"
+            "description": "Invalid id supplied"
           },
           "404": {
             "description": "User not found"
           }
         }
       }
+    },
+    "/api/order/addorders": {
+      "post": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Create order",
+        "description": "Add new order.",
+        "operationId": "createOrder",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Created order object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/order/getorders/{UserId}": {
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Find order by UserID",
+        "description": "Returns a list of orders for user",
+        "operationId": "getOrderByUserId",
+        
+        "parameters": [
+          {
+            "name": "UserId",
+
+            "in": "path",
+            "description": "ID of user to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+         
+            {
+              "name": "x-access-token",
+              "in": "header",
+              "description": "",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+       
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid UserID supplied"
+          },
+          "404": {
+            "description": "order not found"
+          }
+        },
+        "security": []
+        
+
+      }
+    },
+    "/api/order/deleteorder": {
+      "delete": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Delete a order ",
+        "description": "",
+        "operationId": "deleteorder",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+    
+         
+        ],
+        "requestBody": {
+          "description": "order id to delete",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "order deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "order not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": {}
+                  },
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+          
+      }
     }
   },
   "components": {
     "schemas": {
+      "Stock": {
+        "type": "object",
+        "properties": {
+          "ProductId": {
+            "required": true,
+            "type": "string",
+            "example": "65065c37eb2352ebd4a45e73",
+            "description": "The ID of the product associated with the stock"
+          },
+          "Quantity": {
+            "required": true,
+            "type": "integer",
+            "example": 10,
+            "description": "The quantity of the product in stock"
+          }
+        },
+        "xml": {
+          "name": "Stock"
+        }
+      },
       "Order": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 10
+      
+          "UserId": {
+            "type": "string",
+         "example":"64f8bbcc0c173085185468c0"
           },
-          "petId": {
-            "type": "integer",
-            "format": "int64",
-            "example": 198772
-          },
-          "quantity": {
+          "Quantity": {
             "type": "integer",
             "format": "int32",
-            "example": 7
+            "example": 1
           },
-          "shipDate": {
+          "OrderDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example":"2023-09-06T17:50:04.557+00:00"
           },
-          "status": {
+          "ProductId": {
             "type": "string",
-            "description": "Order Status",
-            "example": "approved",
-            "enum": [
-              "placed",
-              "approved",
-              "delivered"
-            ]
+            "example":"64fec4c14a66c0f014b5324a"
           },
-          "complete": {
-            "type": "boolean"
+          "Price": {
+            "type": "integer",
+            "format": "int64",
+            "example": 19
           }
+         
         },
         "xml": {
           "name": "order"
         }
       },
-      "Customer": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 100000
-          },
-          "username": {
-            "type": "string",
-            "example": "fehguy"
-          },
-          "address": {
-            "type": "array",
-            "xml": {
-              "name": "addresses",
-              "wrapped": true
-            },
-            "items": {
-              "$ref": "#/components/schemas/Address"
-            }
-          }
-        },
-        "xml": {
-          "name": "customer"
-        }
-      },
-      "Address": {
-        "type": "object",
-        "properties": {
-          "street": {
-            "type": "string",
-            "example": "437 Lytton"
-          },
-          "city": {
-            "type": "string",
-            "example": "Palo Alto"
-          },
-          "state": {
-            "type": "string",
-            "example": "CA"
-          },
-          "zip": {
-            "type": "string",
-            "example": "94301"
-          }
-        },
-        "xml": {
-          "name": "address"
-        }
-      },
-      "Category": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 1
-          },
-          "name": {
-            "type": "string",
-            "example": "Dogs"
-          }
-        },
-        "xml": {
-          "name": "category"
-        }
-      },
+
       "User": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 10
-          },
-          "username": {
+          "UserName": {
             "type": "string",
             "example": "theUser"
           },
-          "firstName": {
-            "type": "string",
-            "example": "John"
-          },
-          "lastName": {
-            "type": "string",
-            "example": "James"
-          },
-          "email": {
+          "Email": {
             "type": "string",
             "example": "john@email.com"
           },
-          "password": {
+          "Password": {
             "type": "string",
             "example": "12345"
           },
-          "phone": {
+          "PhoneNumber": {
             "type": "string",
             "example": "12345"
           },
-          "userStatus": {
-            "type": "integer",
-            "description": "User Status",
-            "format": "int32",
-            "example": 1
+          "Address": {
+            "type": "string",
+            "example": "jordan"
+          },
+          "IsAdmin": {
+            "type": "bool",
+            "description": "is user admin",
+            "example": true
           }
         },
         "xml": {
           "name": "user"
         }
       },
-      "Tag": {
+      "SignIn": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
+          "Email": {
+            "type": "string",
+            "example": "john@email.com"
           },
-          "name": {
-            "type": "string"
+          "Password": {
+            "type": "string",
+            "example": "12345"
           }
         },
         "xml": {
-          "name": "tag"
+          "name": "user"
         }
       },
-      "Pet": {
-        "required": [
-          "name",
-          "photoUrls"
-        ],
+      "UserUpdate": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 10
-          },
-          "name": {
+          "UserName": {
             "type": "string",
-            "example": "doggie"
+            "example": "theUserUpdate"
           },
-          "category": {
-            "$ref": "#/components/schemas/Category"
-          },
-          "photoUrls": {
-            "type": "array",
-            "xml": {
-              "wrapped": true
-            },
-            "items": {
-              "type": "string",
-              "xml": {
-                "name": "photoUrl"
-              }
-            }
-          },
-          "tags": {
-            "type": "array",
-            "xml": {
-              "wrapped": true
-            },
-            "items": {
-              "$ref": "#/components/schemas/Tag"
-            }
-          },
-          "status": {
+          "Password": {
             "type": "string",
-            "description": "pet status in the store",
-            "enum": [
-              "available",
-              "pending",
-              "sold"
-            ]
+            "example": "12345"
+          },
+          "PhoneNumber": {
+            "type": "string",
+            "example": "12345333"
+          },
+          "Address": {
+            "type": "string",
+            "example": "jordan-irbid"
           }
         },
         "xml": {
-          "name": "pet"
+          "name": "user"
         }
       },
-      "ApiResponse": {
+      "Product": {
         "type": "object",
         "properties": {
-          "code": {
+          "Price": {
             "type": "integer",
-            "format": "int32"
+            "example": "20"
           },
-          "type": {
-            "type": "string"
+          "Type": {
+            "type": "string",
+            "example": "home "
           },
-          "message": {
-            "type": "string"
+          "Name": {
+            "type": "string",
+            "example": "product name"
+          },
+          "Descrption": {
+            "type": "string",
+            "example": "for home"
           }
         },
         "xml": {
-          "name": "##default"
+          "name": "user"
+        }
+      },
+      "ProductUpdate": {
+        "type": "object",
+        "properties": {
+          "ProductId": {
+            "type": "integer",
+            "example": "650b031640e5075992f360b8"
+          },
+          "Price": {
+            "type": "integer",
+            "example": "20"
+          },
+          "Type": {
+            "type": "string",
+            "example": "home "
+          },
+          "Name": {
+            "type": "string",
+            "example": "product name"
+          },
+          "Description": {
+            "type": "string",
+            "example": "for home"
+          }
+        },
+        "xml": {
+          "name": "user"
         }
       }
     },
@@ -1140,23 +1157,15 @@
       }
     },
     "securitySchemes": {
-      "petstore_auth": {
-        "type": "oauth2",
-        "flows": {
-          "implicit": {
-            "authorizationUrl": "https://petstore3.swagger.io/oauth/authorize",
-            "scopes": {
-              "write:pets": "modify pets in your account",
-              "read:pets": "read your pets"
-            }
-          }
-        }
-      },
-      "api_key": {
+      "checkAuthUser": {
         "type": "apiKey",
-        "name": "api_key",
-        "in": "header"
+        "flows": {}
       }
+    },
+    "x-access-token": {
+      "type": "apiKey",
+      "name": "x-access-token",
+      "in": "header"
     }
   }
 }

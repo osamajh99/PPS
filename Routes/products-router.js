@@ -5,11 +5,10 @@ const ProductsCtrl = require('../Controller/products-ctrl')
 
  const router = express.Router()
 
+ router.get('/getproducts',[checkAuthUser], ProductsCtrl.getproducts);
 
- router.post('/products',[checkAuthUser,isAdmin], ProductsCtrl.addProducts);
-
+ router.post('/addproducts',[checkAuthUser,isAdmin], ProductsCtrl.addProducts);
+ router.put('/updateproducts',[checkAuthUser,isAdmin], ProductsCtrl.updateProducts)
  router.delete('/deleteprod/:id',[checkAuthUser,isAdmin], ProductsCtrl.deleteProduct);
-  router.get('/getproducts', ProductsCtrl.getproducts);
 
-  
  module.exports = router
