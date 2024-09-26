@@ -72,7 +72,81 @@ CreateOrder = async (req, res) => {
      }
 
 }
+
+getordereByuserId = async (req, res) => {
+     try {
+          const orders = await Orders.find({ UserId: req.params.id });
+
+          if (!orders) {
+               return res.status(404)
+                    .json({ success: false, error: `Order not found` });
+          }
+
+          return res.status(200)
+               .json({ success: true, data: orders });
+     } catch (err) {
+          return res.status(400)
+               .json({ success: false, error: err.message });
+     }
+};
+
+//Cancel Order  
+
+const deleteOrder = async (req, res) => {
+     const { orderId: orderId } = req.body;
+
+     if (!orderId) {
+          return res.status(400).json({
+               success: false,
+               error: 'You must provide OrderId',
+          });
+     }
+
+     try {
+          const existOrder = await Orders.findOne({ '_id': orderId });
+
+          if (!existOrder) {
+               return res.status(400).json({
+                    success: false,
+                    error: `There is no order associated with the OrderId ${orderId}`,
+               });
+          }
+          const orderDeleted = await Orders.deleteOne({ '_id': orderId });
+
+          const existProductInStock = await Stock.findOne({ 'ProductId': existOrder.ProductId });
+
+          const filter = { "ProductId": existOrder.ProductId }
+          const updateDocument = {
+               $set: {
+                    "Quantity": existOrder.Quantity + existProductInStock.Quantity,
+               },
+          }
+
+          const updatedStock = await Stock.updateOne(filter, updateDocument)
+
+
+          if (updatedStock && orderDeleted) {
+               return res.status(200).json({
+                    success: true,
+                    message: 'Order is deleted & the stock updated',
+               });
+          } else {
+               return res.status(500).json({
+                    success: false,
+                    error: 'Order deleted but the Stock not updated ',
+               });
+          }
+     } catch (error) {
+          return res.status(500).json({
+               success: false,
+               error: 'Internal Server Error',
+          });
+     }
+}
+
 module.exports = {
-     CreateOrder
+     CreateOrder,
+     getordereByuserId,
+     deleteOrder
 
 }

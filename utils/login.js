@@ -1,4 +1,4 @@
-/*const login = (body) => {
+const loginValidation = (body) => {
     const { Email, Password }  = body
     let error = null
 
@@ -9,4 +9,4 @@
     return error
 }
 
-module.exports = { login: login }*/
+module.exports = { loginValidation: loginValidation }

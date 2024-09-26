@@ -34,6 +34,7 @@ const addStock = (req, res) => {
 };
 const updateStock = async (req, res) => {
   const { ProductId, Quantity } = req.body;
+  console.log(req.body);
 
   if (!ProductId || !Quantity) {
     return res.status(400).json({
